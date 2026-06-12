@@ -43,6 +43,14 @@ function MediaModal({ item, onClose }) {
 export default function App() {
   const [open, setOpen] = useState(null);
 
+  const developmentGroups = mediaGroups.filter(
+    (g) => g.title !== "Characters"
+  );
+
+  const characterGroup = mediaGroups.find(
+    (g) => g.title === "Characters"
+  );
+
   return (
     <>
       <Nav />
@@ -80,9 +88,9 @@ export default function App() {
             </div>
 
             <div className="card">
-              <div className="cardTitle">Midterm goal</div>
+              <div className="cardTitle">Final outcome</div>
               <div className="cardText">
-                Website + playable Stage 1–2 draft with wall test documentation.
+                A playable interactive installation with scent selection, LED feedback, and audience interaction.
               </div>
             </div>
           </div>
@@ -94,13 +102,13 @@ export default function App() {
           <Section id="how" title="How" paragraphs={site.how} />
         </section>
 
-        <section id="media" className="mediaSection">
+        <section id="development" className="mediaSection">
           <div className="mediaSectionHead">
             <h2>Development Process</h2>
             <p>{site.mediaNote}</p>
           </div>
 
-          {mediaGroups.map((g, idx) => (
+          {developmentGroups.map((g, idx) => (
             <MediaCarousel
               key={idx}
               groupTitle={g.title}
@@ -112,11 +120,28 @@ export default function App() {
           ))}
         </section>
 
+        {characterGroup && (
+          <section id="character" className="mediaSection">
+            <div className="mediaSectionHead">
+              <h2>Character</h2>
+              <p>{characterGroup.description}</p>
+            </div>
+
+            <MediaCarousel
+              groupTitle={characterGroup.title}
+              description={characterGroup.description}
+              items={characterGroup.items}
+              onOpen={(item) => setOpen(item)}
+            />
+          </section>
+        )}
+
         <section id="installation" className="installationSection">
           <div className="mediaSectionHead">
             <h2>Final Installation</h2>
             <p>
-              Documentation of the completed installation, exhibition setup, and audience interaction.
+              Documentation of the completed installation, including the physical setup,
+              interaction desk, scent display, LED feedback, and audience experience.
             </p>
           </div>
 
